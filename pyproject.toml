@@ -13,7 +13,7 @@ dependencies = [
     "python-dotenv>=1.2.2",
 ]
 
-[proyect.scrpts]
+[project.scripts]
 #aqui definimos el comando corto
 #quitamos el src porque definimos "src" como la raiz
 app="main:main"
