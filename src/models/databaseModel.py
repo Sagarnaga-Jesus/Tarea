@@ -1,8 +1,8 @@
 import mysql.connector
 import os
-from dotenv import load_doenv
+from dotenv import load_dotenv
 
-load_doenv
+load_dotenv
 
 class Database:
     @staticmethod 
