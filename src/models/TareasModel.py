@@ -13,10 +13,10 @@ class TareaModel:
         conn.close()
         return resultado
     
-    def crar(self, id_usuario, titulo, descripcion, prioridad, clasificacion):
+    def crear(self, id_usuario, titulo, descripcion, prioridad, clasificacion):
         conn = self.db.get_connetion()
         cursor = conn.cursor()
-        query = """INSET INTO tareas (id_usuario,titulo, descripcion, prioridad, clasifiacion)
+        query = """INSERT INTO tareas (id_usuario,titulo, descripcion, prioridad, clasifiacion)
                     VALUES (%s, %s, %s, %s, %s)"""
         cursor.execute(query, (id_usuario, titulo, descripcion, prioridad, clasificacion))
         conn.commit()

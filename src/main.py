@@ -12,11 +12,11 @@ def start(page: ft.Page):
     def route_change(e):
         page.views.clear()
         
-        if e == "/":
+        if page.route == "/":
             page.add(ft.Text("Caso 1"))
             page.views.append(LoginView(page, auth_ctrl))
             
-        elif e == "/dashboard":
+        elif page.route == "/dashboard":
             page.views.append(DashboardView(page, task_ctrl))
             
         if not page.views:

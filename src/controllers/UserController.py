@@ -1,5 +1,5 @@
-from src.models.UserModel import UsuarioModel
-from src.models.schemasModel import UsuarioSchema
+from models.UsersModel import UsuarioModel
+from models.schemasModel import UsuarioShema
 from pydantic import ValidationError
 
 class AuthController:
@@ -9,9 +9,9 @@ class AuthController:
     def registrar_Usuario(self, nombre, email, contraseña):
         try:
             #Vlidr datos con el shema
-            nuevo_usuario = UsuarioSchema(nombre=nombre, email=email, contraseña=contraseña)
+            nuevo_usuario = UsuarioShema(nombre=nombre, email=email, contraseña=contraseña)
             success = self.model.registrar(nuevo_usuario)
-            return success, "Usuario crado correctamente"
+            return success, "Usuario creado correctamente"
         except ValidationError as e:
             # Retorn el primer error de validacion encotrado
             
