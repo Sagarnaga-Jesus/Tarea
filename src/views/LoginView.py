@@ -3,7 +3,7 @@ import flet as ft
 admin="Holadmin"
 admincontra="admin"
 
-def LoginView(page, auth_controller):
+def LoginView(page, auth_ctrl):
     admin="Holadmin"
     admincontra="admin"
     
@@ -28,7 +28,7 @@ def LoginView(page, auth_controller):
             page.update()
             return
     
-    user, msg = auth_controller.login(correo.value, contra.value)
+    user, msg = auth_ctrl.login(correo.value, contra.value)
     
     if user:
         page.session.set("user", user)
