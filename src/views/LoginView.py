@@ -35,12 +35,16 @@ def LoginView(page, AuthController):
             page.snack_bar = ft.SnackBar(ft.Text(msg))
             page.snack_bar.open = True
             page.update()
+            
+            
+    def registra_click():
+        user, msg = AuthController.registrar_Usuario(correo.value, contra.value)
     
     def olvidado():
         page.show_dialog(ft.SnackBar(ft.Text("Se a enviado su contraseña al correo")))
     
-    iniciar=( ft.Button("Iniciar sesion",color=ft.Colors.WHITE ,bgcolor=ft.Colors.BLUE,on_click=verifica))
-    registrarse =( ft.TextButton("¿Quieres registrarte?"))
+    iniciar=( ft.Button("Iniciar sesion",color=ft.Colors.WHITE ,bgcolor=ft.Colors.BLUE,on_click=login_click))
+    registrarse =( ft.TextButton("¿Quieres registrarte?", on_click=registra_click))
     olvidada =( ft.TextButton("¿Olvidaste la contraseña?", on_click=olvidado))
     
     def cambio_pantalla():

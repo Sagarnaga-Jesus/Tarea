@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 DELETE FROM `usuario`;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `email`, `contraseña`, `telefono`, `fecha_registro`, `ultimo_ingreso`, `activo`, `foto`) VALUES
-	(1, 'Admin', 'Admins', 'Admin@gmail.com', 'Admin#19', '6562321212', '2026-03-19 11:24:00', '2026-03-19 11:24:02', 1, NULL);
+	(1, 'Admin', 'Admins', 'Admin@gmail.com', '$2b$12$hafQkW5qlwpMl6BiG7GjMOErbuWolBBwg2j28S4fbklJhuyiUAmeu', '6562321212', '2026-03-19 11:24:00', '2026-03-19 11:24:02', 1, NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
