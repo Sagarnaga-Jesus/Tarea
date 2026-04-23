@@ -3,7 +3,7 @@ import flet as ft
 admin="Holadmin"
 admincontra="admin"
 
-def LoginView(page, auth_ctrl):
+def LoginView(page, AuthController):
     admin="Holadmin"
     admincontra="admin"
     
@@ -27,21 +27,19 @@ def LoginView(page, auth_ctrl):
             page.snack_bar.open = True
             page.update()
             return
-    
-    user, msg = auth_ctrl.login(correo.value, contra.value)
-    
-    if user:
-        page.session.set("user", user)
-        page.go("/dashboard")
-    else:
-        page.snack_bar = ft.SnackBar(ft.Text(msg))
-        page.snack_bar.open = True
-        page.update()
+        user, msg = AuthController.login(correo.value, contra.value)
+        if user:
+            page.session.set("user", user)
+            page.go("/dashboard")
+        else:
+            page.snack_bar = ft.SnackBar(ft.Text(msg))
+            page.snack_bar.open = True
+            page.update()
     
     def olvidado():
         page.show_dialog(ft.SnackBar(ft.Text("Se a enviado su contraseña al correo")))
     
-    iniciar=( ft.Button("Iniciar sesion",color=ft.Colors.WHITE ,bgcolor=ft.Colors.BLUE,on_click=login_click))
+    iniciar=( ft.Button("Iniciar sesion",color=ft.Colors.WHITE ,bgcolor=ft.Colors.BLUE,on_click=verifica))
     registrarse =( ft.TextButton("¿Quieres registrarte?"))
     olvidada =( ft.TextButton("¿Olvidaste la contraseña?", on_click=olvidado))
     
@@ -122,4 +120,3 @@ def LoginView(page, auth_ctrl):
         ]
     )
     
-

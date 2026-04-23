@@ -8,7 +8,7 @@ class AuthController:
         
     def registrar_Usuario(self, nombre, email, contraseña):
         try:
-            #Vlidr datos con el shema
+            #Validr datos con el shema
             nuevo_usuario = UsuarioShema(nombre=nombre, email=email, contraseña=contraseña)
             success = self.model.registrar(nuevo_usuario)
             return success, "Usuario creado correctamente"
@@ -16,3 +16,14 @@ class AuthController:
             # Retorn el primer error de validacion encotrado
             
             return False, e.errors()[0],{'msg'}
+    
+    def login(self, email, contraseña):
+        usuario = UsuarioModel.validar_login(email)  # 👈 necesitas este método en tu modelo
+        
+        if not usuario:
+            return None, "Usuario no encontrado"
+        
+        if usuario.contraseña != contraseña:
+            return None, "Contraseña incorrecta"
+        
+        return usuario, "OK"
