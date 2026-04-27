@@ -4,10 +4,21 @@ def DashboardView(page, tarea_controller):
     user = getattr(page, "user_data", None)
     lista_tareas = ft.Column(scroll=ft.ScrollMode.ALWAYS, expand=True)
     
+    def eliminar(id_tarea):
+        success, msg = tarea_controller.eliminar_tarea(id_tarea)
+    
+        if success:
+            refresh()
+        else:
+            page.snack_bar = ft.SnackBar(ft.Text(msg))
+            page.snack_bar.open = True
+            page.update()
+    
     def refresh():
         if user and 'id_usuario' in user:
             lista_tareas.controls.clear()
             tareas = tarea_controller.obtener_lista(user['id_usuario'])
+    
     
             for t in tareas:
                 lista_tareas.controls.append(
@@ -18,11 +29,21 @@ def DashboardView(page, tarea_controller):
                                 subtitle=ft.Text(
                                     f"{t['descripcion']}\nPrioridad: {t['prioridad']}"
                                 ),
-                                trailing=ft.Container(
-                                    content=ft.Text(t.get('estado', 'pendiente')),
-                                    bgcolor=ft.Colors.ORANGE_300,
-                                    padding=5,
-                                    border_radius=5
+                                trailing=ft.Row(
+                                    [
+                                        ft.Container(
+                                            content=ft.Text(t.get('estado', 'pendiente')),
+                                            bgcolor=ft.Colors.ORANGE_300,
+                                            padding=5,
+                                            border_radius=5
+                                        ),
+            
+                                        ft.IconButton(
+                                            icon=ft.Icons.DELETE,
+                                            icon_color="red",
+                                            on_click=lambda e, id=t['id_tarea']: eliminar(id)
+                                        )
+                                    ],tight=True
                                 )
                             ),
                             padding=10

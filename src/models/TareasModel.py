@@ -26,3 +26,15 @@ class TareaModel:
 
         conn.commit()
         conn.close()
+    
+    def eliminar(self, id_tarea):
+        conn = self.db.get_connection()
+        cursor = conn.cursor()
+    
+        cursor.execute(
+            "DELETE FROM tareas WHERE id_tarea = %s",
+            (id_tarea,)
+        )
+    
+        conn.commit()
+        conn.close()

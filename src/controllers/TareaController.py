@@ -13,3 +13,10 @@ class TareaController:
         
         self.model.crear(id_usuario, titulo, descripcion, prioridad, clasificacion, estado)
         return True, "Tarea guardada"
+    
+    def eliminar_tarea(self, id_tarea):
+        try:
+            self.model.eliminar(id_tarea)
+            return True, "Tarea eliminada"
+        except Exception as e:
+            return False, str(e)
