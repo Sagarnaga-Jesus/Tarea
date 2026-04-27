@@ -3,9 +3,12 @@ from typing import Optional
 from datetime import date, time
 
 class UsuarioShema(BaseModel):
-    nombre: str = Field(min_length=3, max_length=100)
+    nombre: str= Field(min_length=3, max_length=100)
+    apellido: Optional[str] = None
     email: EmailStr
-    password: str = Field(min_length=8)
+    password: str= Field(min_length=8)
+    telefono: Optional[str] = None
+    fecha: Optional[str] = None
 
 class TareaSchema(BaseModel):
     titulo: str = Field(min_length=1, max_length=200)

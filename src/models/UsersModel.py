@@ -8,19 +8,22 @@ class UsuarioModel:
     def registrar(self, usuario_data):
         salt = bcrypt.gensalt()
         hashed_pw = bcrypt.hashpw(
-            usuario_data.password.encode('utf-8'),  # ✔ corregido
+            usuario_data.password.encode('utf-8'),
             salt
         )
         
-        conn = self.db.get_connetion()
+        conn = self.db.get_connection()
         cursor = conn.cursor()
         try:
             cursor.execute(
-                "INSERT INTO usuario (nombre, email, contraseña) VALUES (%s, %s, %s)",
+                "INSERT INTO usuario (nombre, apellido, email, contraseña, telefono, fecha_registro) VALUES (%s, %s, %s, %s, %s, %s)",
                 (
                     usuario_data.nombre,
+                    usuario_data.apellido,
                     usuario_data.email,
-                    hashed_pw.decode('utf-8')
+                    hashed_pw.decode('utf-8'),
+                    usuario_data.telefono,
+                    usuario_data.fecha
                 )
             )
             conn.commit()
@@ -39,5 +42,15 @@ class UsuarioModel:
         conn.close()
         
         if user and bcrypt.checkpw(password.encode('utf-8'),user['contraseña'].encode('utf-8')):
+            conn = self.db.get_connection()
+            cursor = conn.cursor()
+        
+            cursor.execute(
+                "UPDATE usuario SET ultimo_ingreso = NOW() WHERE id_usuario = %s",
+                (user["id_usuario"],)
+            )
+        
+            conn.commit()
+            conn.close()
             return user
         return None

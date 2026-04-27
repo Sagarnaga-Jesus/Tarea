@@ -3,6 +3,7 @@ from controllers.UserController import AuthController
 from controllers.TareaController import TareaController
 from views.LoginView import LoginView
 from views.dashboardView import DashboardView
+from views.RegistroView import RegistroView
 
 def start(page: ft.Page):
     page.title = "Sistema SIGE"
@@ -21,6 +22,9 @@ def start(page: ft.Page):
             
         elif page.route == "/dashboard":
             page.views.append(DashboardView(page, task_ctrl))
+        
+        elif page.route == "/registro":
+            page.views.append(RegistroView(page, auth_ctrl))
             
             #agregas aqui las vistas que necesites
         page.update()

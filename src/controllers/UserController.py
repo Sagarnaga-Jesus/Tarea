@@ -6,12 +6,15 @@ class AuthController:
     def __init__(self):
         self.model = UsuarioModel()
         
-    def registrar_Usuario(self, nombre, email, contraseña):
+    def registrar_Usuario(self, nombre, apellido, email, contraseña, telefono, fecha):
         try:
             nuevo_usuario = UsuarioShema(
                 nombre=nombre,
+                apellido=apellido,
                 email=email,
-                password=contraseña
+                password=contraseña,
+                telefono=telefono,
+                fecha=fecha
             )
 
             success = self.model.registrar(nuevo_usuario)
