@@ -107,6 +107,7 @@ def DashboardView(page, tarea_controller):
                 title=ft.Text(f"Bienvenido, {user['nombre'] if user else 'Usuario'}"),
                 
                 actions=[
+                    ft.IconButton(ft.Icons.PERSON, on_click=lambda _: page.go("/perfil")),
                     ft.IconButton(ft.Icons.EXIT_TO_APP, on_click=lambda _: page.go("/"))
                 ],
             ),

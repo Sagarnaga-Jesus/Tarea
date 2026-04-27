@@ -12,11 +12,11 @@ def LoginView(page: ft.Page, auth_controller):
     correo=(ft.TextField(label="Correo",autofocus=True, icon=ft.Icons.PERSON ))
     contra=(ft.TextField(label="Contraseña",suffix=ft.IconButton(icon=ft.Icons.VISIBILITY, on_click=ver_contra) ,password=True, autofocus=True, icon=ft.Icons.PASSWORD))
     
+    
+    
     def login_click(e):
         if not correo.value or not contra.value:
-            page.snack_bar = ft.SnackBar(ft.Text("Por favor, complete todos los campos"))
-            page.snack_bar.open = True
-            page.update()
+            page.show_dialog(ft.SnackBar(ft.Text("Por favor, complete todos los campos")))
             return
         
     
@@ -26,10 +26,8 @@ def LoginView(page: ft.Page, auth_controller):
             page.user_data = user
             page.go("/dashboard")
         else:
-            page.snack_bar = ft.SnackBar(ft.Text(msg))
-            page.snack_bar.open = True
-            page.update()
-    
+            page.show_dialog(ft.SnackBar(ft.Text(msg)))
+            
     def olvidado():
         page.show_dialog(ft.SnackBar(ft.Text("Se a enviado su contraseña al correo")))
     
