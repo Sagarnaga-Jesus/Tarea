@@ -35,22 +35,30 @@ class UsuarioModel:
             conn.close()
     
     def validar_login(self,email,password):
-        conn= self.db.get_connection()
-        cursor=conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM usuario WHERE email=%s",(email,))
-        user = cursor.fetchone()
-        conn.close()
-        
-        if user and bcrypt.checkpw(password.encode('utf-8'),user['contraseña'].encode('utf-8')):
-            conn = self.db.get_connection()
-            cursor = conn.cursor()
-        
-            cursor.execute(
-                "UPDATE usuario SET ultimo_ingreso = NOW() WHERE id_usuario = %s",
-                (user["id_usuario"],)
-            )
-        
-            conn.commit()
+        conn = None
+        cursor = None
+        try:
+            conn= self.db.get_connection()
+            cursor=conn.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM usuario WHERE email=%s",(email,))
+            user = cursor.fetchone()
             conn.close()
-            return user
-        return None
+            
+            if user and bcrypt.checkpw(password.encode('utf-8'),user['contraseña'].encode('utf-8')):
+                conn = self.db.get_connection()
+                cursor = conn.cursor()
+            
+                cursor.execute(
+                    "UPDATE usuario SET ultimo_ingreso = NOW() WHERE id_usuario = %s",
+                    (user["id_usuario"],)
+                )
+            
+                conn.commit()
+                conn.close()
+                return user
+            return None
+        except mysql.connector.Error as err:
+            return False
+        finally:
+            if cursor: cursor.close()
+            if conn: conn.clos()

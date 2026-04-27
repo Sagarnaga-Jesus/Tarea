@@ -15,9 +15,7 @@ def RegistroView(page: ft.Page, auth_controller):
     
     def registra(e):
         if not correo.value or not contra.value:
-            page.snack_bar = ft.SnackBar(ft.Text("Por favor, complete todos los campos"))
-            page.snack_bar.open = True
-            page.update()
+            page.show_dialog(ft.SnackBar(ft.Text("Por favor, complete todos los campos")))
             return
         
         hoy = datetime.now()
@@ -32,7 +30,11 @@ def RegistroView(page: ft.Page, auth_controller):
             page.snack_bar.open = True
             page.update()
     
-    registrar =( ft.TextButton("Registrase", on_click=registra))
+    registrar =( ft.ElevatedButton("Registrase",color=ft.Colors.BLUE, on_click=registra))
+    def regresar():
+        page.go("/")
+        
+    reversa = ( ft.ElevatedButton("Regresar a login",color=ft.Colors.RED ,on_click=regresar))
     
     return ft.View(
         route="/registro",
@@ -54,6 +56,7 @@ def RegistroView(page: ft.Page, auth_controller):
                     correo,
                     contra,
                     registrar,
+                    reversa
                 ],
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                 spacing=20,
