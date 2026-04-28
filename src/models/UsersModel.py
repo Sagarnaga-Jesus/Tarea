@@ -57,7 +57,7 @@ class UsuarioModel:
                 conn.close()
                 return user
             return None
-        except mysql.connector.Error as err:
+        except Exception as err:
             return False
         finally:
             if cursor: cursor.close()
