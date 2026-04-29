@@ -44,6 +44,7 @@ class UsuarioModel:
             conn.close()
     
     def validar_login(self,email,password):
+        
         conn = None
         cursor = None
         try:
@@ -61,6 +62,8 @@ class UsuarioModel:
                     "UPDATE usuario SET ultimo_ingreso = NOW() WHERE id_usuario = %s",
                     (user["id_usuario"],)
                 )
+                
+                
             
                 conn.commit()
                 conn.close()
@@ -71,3 +74,4 @@ class UsuarioModel:
         finally:
             if cursor: cursor.close()
             if conn: conn.close()
+            

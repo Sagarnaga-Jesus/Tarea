@@ -9,9 +9,9 @@ def RegistroView(page: ft.Page, auth_controller):
         
     correo=(ft.TextField(label="Correo",autofocus=True, icon=ft.Icons.PERSON ))
     contra=(ft.TextField(label="Contraseña",suffix=ft.IconButton(icon=ft.Icons.VISIBILITY, on_click=ver_contra) ,password=True, autofocus=True, icon=ft.Icons.PASSWORD))
-    nombre=(ft.TextField(label="Nombre",autofocus=True,))
+    nombre=(ft.TextField(label="Nombre",suffix=ft.Icon(icon=ft.Icons.BADGE)))
     apellido=(ft.TextField(label="apellido",autofocus=True,))
-    telefono=(ft.TextField(label="Telefono",autofocus=True,))
+    telefono=(ft.TextField(label="Telefono",autofocus=True,suffix=ft.Icon(icon=ft.Icons.CALL)))
     
     def registra(e):
         if not correo.value and not contra.value and not nombre.value and not apellido.value and not telefono.value :
