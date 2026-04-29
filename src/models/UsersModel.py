@@ -12,6 +12,15 @@ class UsuarioModel:
             salt
         )
         
+        conn= self.db.get_connection()
+        cursor=conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM usuario WHERE email=%s",(usuario_data.email,))
+        user = cursor.fetchone()
+        conn.close()
+        
+        if user:
+            return False
+        
         conn = self.db.get_connection()
         cursor = conn.cursor()
         try:
@@ -61,4 +70,4 @@ class UsuarioModel:
             return False
         finally:
             if cursor: cursor.close()
-            if conn: conn.clos()
+            if conn: conn.close()

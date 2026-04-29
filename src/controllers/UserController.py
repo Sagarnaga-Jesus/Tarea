@@ -18,7 +18,10 @@ class AuthController:
             )
 
             success = self.model.registrar(nuevo_usuario)
-            return success, "Usuario creado correctamente"
+            if success:
+                return True, "Usuario creador correctamente, inicia sesion"
+            else:
+                return False, "Usuario Existente"
 
         except ValidationError as e:
             return False, e.errors()[0]['msg']

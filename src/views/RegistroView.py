@@ -14,7 +14,7 @@ def RegistroView(page: ft.Page, auth_controller):
     telefono=(ft.TextField(label="Telefono",autofocus=True,))
     
     def registra(e):
-        if not correo.value or not contra.value:
+        if not correo.value and not contra.value and not nombre.value and not apellido.value and not telefono.value :
             page.show_dialog(ft.SnackBar(ft.Text("Por favor, complete todos los campos")))
             return
         
@@ -25,10 +25,9 @@ def RegistroView(page: ft.Page, auth_controller):
         
         if user:
             page.go("/")
+            page.show_dialog(ft.SnackBar(ft.Text(msg)))
         else:
-            page.snack_bar = ft.SnackBar(ft.Text(msg))
-            page.snack_bar.open = True
-            page.update()
+            page.show_dialog(ft.SnackBar(ft.Text(msg)))
     
     registrar =( ft.ElevatedButton("Registrase",color=ft.Colors.BLUE, on_click=registra))
     def regresar():
