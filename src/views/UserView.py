@@ -1,6 +1,7 @@
 import flet as ft
 
 def UserView(page, auth_controller):
+    page.title = "Perfil"
     user = getattr(page, "user_data", None)
     apellido = ft.Text(f"Apellido: {user['apellido'] if user else 'Usuario'}", size=20)
     telefono = ft.Text(f"Telefono: {user['telefono'] if user else 'Usuario'}", size=20)

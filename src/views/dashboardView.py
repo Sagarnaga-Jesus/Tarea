@@ -1,6 +1,7 @@
 import flet as ft
 
 def DashboardView(page, tarea_controller):
+    page.title = "Tareas"
     user = getattr(page, "user_data", None)
     lista_tareas = ft.Column(scroll=ft.ScrollMode.ALWAYS, expand=True)
     
