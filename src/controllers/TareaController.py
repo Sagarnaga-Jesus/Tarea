@@ -10,7 +10,15 @@ class TareaController:
     def guardar_nueva(self, id_usuario, titulo, descripcion, prioridad, clasificacion, estado):
         if not titulo:
             return False, "El titulo es obligatorio"
-        
+        if not descripcion:
+            return False, "La descripcion es obligatoria"
+        if not prioridad:
+            return False, "La prioridad es obligatoria"
+        if not clasificacion:
+            return False, "La clasificacion es obligatoria"
+        if not estado:
+            return False, "El estado es obligatorio"
+
         self.model.crear(id_usuario, titulo, descripcion, prioridad, clasificacion, estado)
         return True, "Tarea guardada"
     

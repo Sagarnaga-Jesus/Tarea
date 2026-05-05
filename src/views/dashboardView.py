@@ -101,6 +101,8 @@ def DashboardView(page, tarea_controller):
                 clasificacion.value = ""
                 estado.value = ""
                 refresh()
+            else:
+                page.show_dialog(ft.SnackBar(ft.Text(msg)))
 
     def cerrar_sesion():
         UsuarioModel().cerrar_sesion(user['id_usuario'])
