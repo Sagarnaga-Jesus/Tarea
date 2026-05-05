@@ -1,4 +1,5 @@
 import flet as ft
+from models.UsersModel import UsuarioModel
 
 def DashboardView(page, tarea_controller):
     page.title = "Tareas"
@@ -101,6 +102,10 @@ def DashboardView(page, tarea_controller):
                 estado.value = ""
                 refresh()
 
+    def cerrar_sesion():
+        UsuarioModel().cerrar_sesion(user['id_usuario'])
+        page.go("/")
+
     return ft.View(
         route="/dashboard",
         controls=[
@@ -109,7 +114,7 @@ def DashboardView(page, tarea_controller):
                 
                 actions=[
                     ft.IconButton(ft.Icons.PERSON, on_click=lambda _: page.go("/perfil")),
-                    ft.IconButton(ft.Icons.EXIT_TO_APP, on_click=lambda _: page.go("/"))
+                    ft.IconButton(ft.Icons.EXIT_TO_APP, on_click=cerrar_sesion)
                 ],
             ),
             ft.Container(

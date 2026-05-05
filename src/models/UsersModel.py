@@ -43,6 +43,24 @@ class UsuarioModel:
         finally:
             conn.close()
     
+    def modificar_perfil(self, id_usuario, nombre, apellido, telefono):
+        conn = self.db.get_connection()
+        cursor = conn.cursor()
+        
+        try:
+            
+            cursor.execute("UPDATE usuario SET nombre = %s WHERE id_usuario = %s", (nombre, id_usuario))
+            cursor.execute("UPDATE usuario SET apellido = %s WHERE id_usuario = %s", (apellido, id_usuario))
+            cursor.execute("UPDATE usuario SET telefono = %s WHERE id_usuario = %s", (telefono, id_usuario))
+            
+            conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error: {e}")
+            return False
+        finally:
+            conn.close()
+    
     def validar_login(self,email,password):
         
         conn = None
@@ -63,10 +81,9 @@ class UsuarioModel:
                     (user["id_usuario"],)
                 )
                 
-                
-            
+                cursor.execute("UPDATE usuario SET activo = 'activo' WHERE id_usuario = %s", (user["id_usuario"],))
                 conn.commit()
-                conn.close()
+                
                 return user
             return None
         except Exception as err:
@@ -75,3 +92,9 @@ class UsuarioModel:
             if cursor: cursor.close()
             if conn: conn.close()
             
+    def cerrar_sesion(self, id_usuario):
+        conn = self.db.get_connection()
+        cursor = conn.cursor()
+        cursor.execute("UPDATE usuario SET activo = 'inactivo' WHERE id_usuario = %s", (id_usuario,))
+        conn.commit()
+        conn.close()

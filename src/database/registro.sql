@@ -39,14 +39,14 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `telefono` varchar(20) DEFAULT NULL,
   `fecha_registro` timestamp NULL DEFAULT NULL,
   `ultimo_ingreso` timestamp NULL DEFAULT NULL,
-  `activo` tinyint(4) DEFAULT NULL,
+  `activo` varchar(10) DEFAULT NULL,
   `foto` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_usuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 DELETE FROM `usuario`;
 INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `email`, `contraseña`, `telefono`, `fecha_registro`, `ultimo_ingreso`, `activo`, `foto`) VALUES
-	(1, 'Admin', 'Admins', 'Admin@gmail.com', 'Admin#19', '6562321212', '2026-03-19 11:24:00', '2026-03-19 11:24:02', 1, NULL);
+	(1, 'Admin', 'Admins', 'Admin@gmail.com', 'Admin#19', '6562321212', '2026-03-19 11:24:00', '2026-03-19 11:24:02', 'inactivo', NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
