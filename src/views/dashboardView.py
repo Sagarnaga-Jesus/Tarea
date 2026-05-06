@@ -28,8 +28,8 @@ def DashboardView(page, tarea_controller):
                         content=ft.Container(
                             content=ft.ListTile(
                                 title=ft.Text(t['titulo'], weight="bold"),
-                                subtitle=ft.Text(
-                                    f"{t['descripcion']}\nPrioridad: {t['prioridad']}"
+                                subtitle=ft.Text((
+                                    f"{t['descripcion']}\nPrioridad: {t['prioridad']}\nClasificación: {t['clasificacion']}"),
                                 ),
                                 trailing=ft.Row(
                                     [
@@ -58,6 +58,7 @@ def DashboardView(page, tarea_controller):
 
     txt_titulo = ft.TextField(label="Nueva Tarea", expand=True)
     descripcion = ft.TextField(label="Descripcion", expand=True)
+    
     prioridad = ft.RadioGroup(
     value="media",
     content=ft.Column([
@@ -67,13 +68,16 @@ def DashboardView(page, tarea_controller):
         ])
     )
     
-    clasificacion = ft.RadioGroup(
+    clasificacion = ft.Dropdown(
         value="Escuela",
-        content=ft.Column([
-            ft.Radio(value="Escuela", label="Escuela"),
-            ft.Radio(value="Trabajo", label="Trabajo"),
-            ft.Radio(value="Cotidiano", label="Cotidiano"),
-        ])
+        options=[
+            ft.dropdown.Option("Escuela"),
+            ft.dropdown.Option("Trabajo"),
+            ft.dropdown.Option("Cotidiano"),
+            ft.dropdown.Option("Personal"),
+            ft.dropdown.Option("Salud"),
+            ft.dropdown.Option("Otro"),
+        ]
     )
     
     estado = ft.RadioGroup(
@@ -140,7 +144,7 @@ def DashboardView(page, tarea_controller):
                         ft.VerticalDivider(thickness=2,color=ft.Colors.BLUE,),
                         ]),
                         ft.FloatingActionButton(icon=ft.Icons.ADD, on_click=add_task),
-                    ], height=130),
+                    ], height=150),
                     ft.Divider(),
                     ft.Text("Mis Tareas Pendientes", size=20, weight="bold"),
                     lista_tareas
