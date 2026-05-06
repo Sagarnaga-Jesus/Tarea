@@ -12,8 +12,8 @@ def RegistroView(page: ft.Page, auth_controller):
     nombre=(ft.TextField(label="Nombre",icon=ft.Icons.BADGE))
     apellido=(ft.TextField(label="apellido",autofocus=True,))
     telefono=(ft.TextField(label="Telefono",autofocus=True,icon=ft.Icons.CALL))
-    
-    
+    file_picker = ft.FilePicker()
+    boton = ft.Button("Seleccionar Archivo", on_click=lambda _: file_picker.pick_files(allow_multiple=True, allowed_extensions=[".jpg", ".jpeg", ".png"]))
     
     def registra(e):
         if not correo.value and not contra.value and not nombre.value and not apellido.value and not telefono.value :
@@ -55,6 +55,7 @@ def RegistroView(page: ft.Page, auth_controller):
                     telefono,
                     correo,
                     contra,
+                    boton,
                     registrar,
                     reversa
                 ],

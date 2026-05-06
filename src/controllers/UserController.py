@@ -27,12 +27,6 @@ class AuthController:
             return False, e.errors()[0]['msg']
     
     def modificar(self, id_usuario, nombre, apellido, telefono):
-        if not nombre:
-            return False, "El nombre es obligatorio"
-        if not apellido:
-            return False, "El apellido es obligatorio"
-        if not telefono:
-            return False, "El telefono es obligatorio"  
         try:
             success = self.model.modificar_perfil(id_usuario, nombre, apellido, telefono)
             return success

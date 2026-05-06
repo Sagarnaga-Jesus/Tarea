@@ -3,7 +3,7 @@ from models.UsersModel import UsuarioModel
 
 def DashboardView(page, tarea_controller):
     page.title = "Tareas"
-    user = getattr(page, "user_data", None)
+    user = getattr(page, "user_data")
     lista_tareas = ft.Column(scroll=ft.ScrollMode.ALWAYS, expand=True)
     
     def eliminar(id_tarea):
@@ -123,19 +123,24 @@ def DashboardView(page, tarea_controller):
                 ft.Column([
                     ft.Row([
                         txt_titulo,
+                        ft.VerticalDivider(thickness=2,color=ft.Colors.BLUE,width=10,),
                         descripcion,
+                        ft.VerticalDivider(thickness=2,color=ft.Colors.BLUE,),
                         ft.Column([
                         ft.Text("Prioridad"),
                         prioridad,]),
+                        ft.VerticalDivider(thickness=2,color=ft.Colors.BLUE,),
                         ft.Column([
                         ft.Text("Clasificacion"),
                         clasificacion,]),
+                        ft.VerticalDivider(thickness=2,color=ft.Colors.BLUE,),
                         ft.Column([
                         ft.Text("Estado"),
                         estado,
+                        ft.VerticalDivider(thickness=2,color=ft.Colors.BLUE,),
                         ]),
                         ft.FloatingActionButton(icon=ft.Icons.ADD, on_click=add_task),
-                    ]),
+                    ], height=130),
                     ft.Divider(),
                     ft.Text("Mis Tareas Pendientes", size=20, weight="bold"),
                     lista_tareas
