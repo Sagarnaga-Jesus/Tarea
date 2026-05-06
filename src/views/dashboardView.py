@@ -59,13 +59,13 @@ def DashboardView(page, tarea_controller):
     txt_titulo = ft.TextField(label="Nueva Tarea", expand=True)
     descripcion = ft.TextField(label="Descripcion", expand=True)
     
-    prioridad = ft.RadioGroup(
-    value="media",
-    content=ft.Column([
-            ft.Radio(value="alta", label="Alta"),
-            ft.Radio(value="media", label="Media"),
-            ft.Radio(value="baja", label="Baja"),
-        ])
+    prioridad = ft.Dropdown(
+        value="media",
+        options=[
+            ft.dropdown.Option("Alta"),
+            ft.dropdown.Option("Media"),
+            ft.dropdown.Option("Baja"),
+        ]
     )
     
     clasificacion = ft.Dropdown(
@@ -80,12 +80,12 @@ def DashboardView(page, tarea_controller):
         ]
     )
     
-    estado = ft.RadioGroup(
+    estado = ft.Dropdown(
         value="Pendiente",
-        content=ft.Column([
-            ft.Radio(value="Pendiente", label="Pendiente"),
-            ft.Radio(value="Terminada", label="Terminada"),
-        ])
+        options=[
+            ft.dropdown.Option("Pendiente"),
+            ft.dropdown.Option("Terminada"),
+        ]
     )
 
     def add_task(e):
@@ -127,21 +127,21 @@ def DashboardView(page, tarea_controller):
                 ft.Column([
                     ft.Row([
                         txt_titulo,
-                        ft.VerticalDivider(thickness=2,color=ft.Colors.BLUE,width=10,),
+                        ft.VerticalDivider(thickness=4,color=ft.Colors.BLUE,),
                         descripcion,
-                        ft.VerticalDivider(thickness=2,color=ft.Colors.BLUE,),
+                        ft.VerticalDivider(thickness=4,color=ft.Colors.BLUE,),
                         ft.Column([
                         ft.Text("Prioridad"),
                         prioridad,]),
-                        ft.VerticalDivider(thickness=2,color=ft.Colors.BLUE,),
+                        ft.VerticalDivider(thickness=4,color=ft.Colors.BLUE,),
                         ft.Column([
                         ft.Text("Clasificacion"),
                         clasificacion,]),
-                        ft.VerticalDivider(thickness=2,color=ft.Colors.BLUE,),
+                        ft.VerticalDivider(thickness=4,color=ft.Colors.BLUE,),
                         ft.Column([
                         ft.Text("Estado"),
                         estado,
-                        ft.VerticalDivider(thickness=2,color=ft.Colors.BLUE,),
+                        ft.VerticalDivider(thickness=4,color=ft.Colors.BLUE,),
                         ]),
                         ft.FloatingActionButton(icon=ft.Icons.ADD, on_click=add_task),
                     ], height=150),
