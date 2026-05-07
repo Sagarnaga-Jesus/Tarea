@@ -25,18 +25,8 @@ def RegistroView(page: ft.Page, auth_controller):
         if archivos:
             archivo = archivos[0]
             
-            destino = os.path.join(
-                "assets",
-                archivo.name
-            )
-
-            shutil.copy(
-                archivo.path,
-                destino
-            )
-            
-            perfil = destino
-            page.foto = perfil
+            page.foto_name = archivo.name
+            page.foto_path = archivo.path
             print(archivo.name)
             print(archivo.path)
 
@@ -54,12 +44,20 @@ def RegistroView(page: ft.Page, auth_controller):
             page.show_dialog(ft.SnackBar(ft.Text("Por favor, complete todos los campos")))
             return
         
-        
+        destino = os.path.join(
+                "assets",
+                page.foto_name
+            )
+
+        shutil.copy(
+            page.foto_path,
+            destino
+        )
         
         hoy = datetime.now()
         fecha = hoy.strftime("%Y-%m-%d")
         
-        user, msg = auth_controller.registrar_Usuario(nombre.value, apellido.value, correo.value, contra.value, telefono.value, fecha, page.foto)
+        user, msg = auth_controller.registrar_Usuario(nombre.value, apellido.value, correo.value, contra.value, telefono.value, fecha, page.foto_name)
         
         if user:
             page.go("/")

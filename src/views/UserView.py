@@ -59,20 +59,9 @@ def ModificarView(page, user):
         if archivos:
             archivo = archivos[0]
             
-            destino = os.path.join(
-                "assets",
-                archivo.name
-            )
-
-            shutil.copy(
-                archivo.path,
-                destino
-            )
             
-            perfil = archivo.name
-            page.foto_nueva = perfil
-            print(archivo.name)
-            print(archivo.path)
+            page.foto_nueva_path = archivo.path
+            page.foto_nueva_name = archivo.name
 
     file_picker = ft.FilePicker()
 
@@ -85,20 +74,30 @@ def ModificarView(page, user):
         if not telefono_nuevo.value or not apellido_nuevo.value or not nombre_nuevo.value:
             page.show_dialog(ft.SnackBar(ft.Text("Complete los campos")))
             return False
+            
         else:
+            destino = os.path.join(
+                "assets",
+                page.foto_nueva_name
+            )
+
+            shutil.copy(
+                page.foto_nueva_path,
+                destino
+            )
             success= AuthController().modificar(
                 user['id_usuario'],
                 nombre_nuevo.value,
                 apellido_nuevo.value,
                 telefono_nuevo.value,
-                page.foto_nueva
+                page.foto_nueva_name
             )
             if success:
                 page.show_dialog(ft.SnackBar(ft.Text("Perfil actualizado correctamente")))
                 user['nombre'] = nombre_nuevo.value
                 user['apellido'] = apellido_nuevo.value
                 user['telefono'] = telefono_nuevo.value
-                user['foto'] = page.foto_nueva
+                user['foto'] = page.foto_nueva_name
 
                 page.user_data = user
                 page.go("/perfil")
