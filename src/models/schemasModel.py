@@ -9,6 +9,7 @@ class UsuarioBaseShema(BaseModel):
     password: str= Field(min_length=8)
     telefono: Optional[str] = None
     fecha: Optional[str] = None
+    foto: Optional[str] = None
     
 class UsuarioShema(UsuarioBaseShema):
     email: EmailStr

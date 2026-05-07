@@ -6,7 +6,7 @@ class AuthController:
     def __init__(self):
         self.model = UsuarioModel()
         
-    def registrar_Usuario(self, nombre, apellido, email, contraseña, telefono, fecha):
+    def registrar_Usuario(self, nombre, apellido, email, contraseña, telefono, fecha, foto):
         try:
             nuevo_usuario = UsuarioShema(
                 nombre=nombre,
@@ -14,7 +14,8 @@ class AuthController:
                 email=email,
                 password=contraseña,
                 telefono=telefono,
-                fecha=fecha
+                fecha=fecha,
+                foto=foto
             )
 
             success = self.model.registrar(nuevo_usuario)
@@ -26,9 +27,9 @@ class AuthController:
         except ValidationError as e:
             return False, e.errors()[0]['msg']
     
-    def modificar(self, id_usuario, nombre, apellido, telefono):
+    def modificar(self, id_usuario, nombre, apellido, telefono, foto):
         try:
-            success = self.model.modificar_perfil(id_usuario, nombre, apellido, telefono)
+            success = self.model.modificar_perfil(id_usuario, nombre, apellido, telefono, foto)
             return success
         except Exception as e:
             print(f"Error al modificar perfil: {e}")

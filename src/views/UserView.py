@@ -1,4 +1,7 @@
 import flet as ft
+import shutil
+import os
+from datetime import datetime
 from controllers.UserController import AuthController
 
 def UserView(page, auth_controller):
@@ -9,7 +12,11 @@ def UserView(page, auth_controller):
     telefono = ft.Text(f"Telefono: {user['telefono'] if user else 'Usuario'}", size=20)
     registro = ft.Text(f"Se registro el: {user['fecha_registro'] if user else 'Usuario'}", size=20)
     ultimo = ft.Text(f"Ultimo conectado: {user['ultimo_ingreso'] if user else 'Usuario'}", size=20)
-
+    
+    imagen = user['foto']
+    
+    foto = ft.Image(src=f"assets/{imagen}", width=150, height=150)
+    
     modificar_btn = ft.ElevatedButton("Modificar Perfil", on_click=lambda _: page.go("/modificar"))
     
 
@@ -27,6 +34,7 @@ def UserView(page, auth_controller):
             ),
             ft.Container(
                 ft.Column([
+                        ft.Row([foto]),
                         ft.Divider(thickness=8,          
                                     color=ft.Colors.BLUE,
                                     ),
@@ -42,6 +50,36 @@ def UserView(page, auth_controller):
     )
 
 def ModificarView(page, user):
+    async def seleccionar_archivo(e):
+
+        archivos = await file_picker.pick_files(
+            allow_multiple=False
+        )
+
+        if archivos:
+            archivo = archivos[0]
+            
+            destino = os.path.join(
+                "assets",
+                archivo.name
+            )
+
+            shutil.copy(
+                archivo.path,
+                destino
+            )
+            
+            perfil = archivo.name
+            page.foto_nueva = perfil
+            print(archivo.name)
+            print(archivo.path)
+
+    file_picker = ft.FilePicker()
+
+    boton = ft.ElevatedButton(
+        "Seleccionar archivo",
+        on_click=seleccionar_archivo
+    )
     
     def guardar_cambios(e):
         if not telefono_nuevo.value or not apellido_nuevo.value or not nombre_nuevo.value:
@@ -53,14 +91,15 @@ def ModificarView(page, user):
                 nombre_nuevo.value,
                 apellido_nuevo.value,
                 telefono_nuevo.value,
-                
+                page.foto_nueva
             )
             if success:
                 page.show_dialog(ft.SnackBar(ft.Text("Perfil actualizado correctamente")))
                 user['nombre'] = nombre_nuevo.value
                 user['apellido'] = apellido_nuevo.value
                 user['telefono'] = telefono_nuevo.value
-    
+                user['foto'] = page.foto_nueva
+
                 page.user_data = user
                 page.go("/perfil")
                 page.update()
@@ -82,6 +121,7 @@ def ModificarView(page, user):
                     ft.Text("Registro de usuario", size=30, weight="bold"),
                     ft.Row([nombre_nuevo,apellido_nuevo,],ft.CrossAxisAlignment.CENTER,),
                     telefono_nuevo,
+                    ft.Row([boton],ft.CrossAxisAlignment.CENTER,),
                     ft.Row([guardar_btn,salir],ft.CrossAxisAlignment.CENTER,),
                 ],
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,

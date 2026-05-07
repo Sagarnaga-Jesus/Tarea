@@ -1,5 +1,7 @@
 import flet as ft
 from datetime import datetime
+import shutil
+import os
 
 def RegistroView(page: ft.Page, auth_controller):
     
@@ -12,18 +14,52 @@ def RegistroView(page: ft.Page, auth_controller):
     nombre=(ft.TextField(label="Nombre",icon=ft.Icons.BADGE))
     apellido=(ft.TextField(label="apellido",autofocus=True,))
     telefono=(ft.TextField(label="Telefono",autofocus=True,icon=ft.Icons.CALL))
-    file_picker = ft.FilePicker()
-    boton = ft.Button("Seleccionar Archivo", on_click=lambda _: file_picker.pick_files(allow_multiple=True, allowed_extensions=[".jpg", ".jpeg", ".png"]))
     
+    
+    async def seleccionar_archivo(e):
+
+        archivos = await file_picker.pick_files(
+            allow_multiple=False
+        )
+
+        if archivos:
+            archivo = archivos[0]
+            
+            destino = os.path.join(
+                "assets",
+                archivo.name
+            )
+
+            shutil.copy(
+                archivo.path,
+                destino
+            )
+            
+            perfil = destino
+            page.foto = perfil
+            print(archivo.name)
+            print(archivo.path)
+
+    file_picker = ft.FilePicker()
+
+    boton = ft.ElevatedButton(
+        "Seleccionar archivo",
+        on_click=seleccionar_archivo
+    )
+    
+    
+
     def registra(e):
         if not correo.value and not contra.value and not nombre.value and not apellido.value and not telefono.value :
             page.show_dialog(ft.SnackBar(ft.Text("Por favor, complete todos los campos")))
             return
         
+        
+        
         hoy = datetime.now()
         fecha = hoy.strftime("%Y-%m-%d")
         
-        user, msg = auth_controller.registrar_Usuario(nombre.value, apellido.value, correo.value, contra.value, telefono.value, fecha)
+        user, msg = auth_controller.registrar_Usuario(nombre.value, apellido.value, correo.value, contra.value, telefono.value, fecha, page.foto)
         
         if user:
             page.go("/")
